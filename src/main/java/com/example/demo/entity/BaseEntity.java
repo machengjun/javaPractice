@@ -1,35 +1,41 @@
 package com.example.demo.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.persistence.Version;
+import java.io.Serializable;
 import java.time.LocalDateTime;
-
 /**
- * @author 马成军
- **/
+ * Base Entity
+ * 声明各实体类的公共属性
+ *
+ * @author 胡荆陵
+ * @version 1.0
+ * @since 2019-04-12
+ */
 @Data
-public class BaseEntity {
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity implements Serializable {
+
     private static final int ID_LENGTH = 36;
 
+    /**
+     * ID
+     * 生成器名称，uuid生成类
+     */
     @Id
     @Column(length = ID_LENGTH, nullable = false)
     @GeneratedValue(generator = "uuid")
-    /**
-     *生成器名称，uuid生成类
-     */
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @TableId(value = "id", type = IdType.UUID)
-    /**
-     * id
-     */
     private String id;
 
     /**
@@ -37,6 +43,7 @@ public class BaseEntity {
      */
     @CreatedDate
     @Column(name = "create_time", updatable = false)
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
@@ -44,10 +51,16 @@ public class BaseEntity {
      */
     @LastModifiedDate
     @Column(name = "modify_time")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime modifyTime;
 
-    public BaseEntity() {
-    }
+    /**
+     * 版本锁
+     */
+    @Version
+    @JsonIgnore
+    @TableField(fill = FieldFill.INSERT)
+    private Integer version;
 
     /**
      * 清除 baseEntity 各基础属性
@@ -56,5 +69,7 @@ public class BaseEntity {
         this.setId(null);
         this.setCreateTime(null);
         this.setModifyTime(null);
+        this.setVersion(null);
     }
+
 }
