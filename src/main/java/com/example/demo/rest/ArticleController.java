@@ -41,6 +41,8 @@ public class ArticleController {
 
     @GetMapping
     ResponseEntity<String> get() {
+        List<String> feedVos;
+
         return new ResponseEntity("访问成功", HttpStatus.OK);
     }
 

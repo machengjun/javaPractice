@@ -17,7 +17,4 @@ import java.util.List;
 @Repository
 public interface ArticleMapper extends BaseMapper<Article> {
 
-
-    @Select("")
-    List<Article> complexSearch();
 }
