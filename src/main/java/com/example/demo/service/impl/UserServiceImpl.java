@@ -7,4 +7,5 @@ import com.example.demo.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService{}
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+}

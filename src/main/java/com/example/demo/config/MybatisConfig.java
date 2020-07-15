@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
@@ -8,9 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * @author 张猛
+ * @author 马成军
  * @description mybatis分页插件
- * @date 2019/11/26 16:26
  */
 @Configuration
 @MapperScan("com.example.demo.dao.mapper")
@@ -32,6 +32,16 @@ public class MybatisConfig {
     @Profile({"dev", "test", "dev-cloud"})
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
+    }
+
+    /**
+     * 乐观锁
+     *
+     * @return
+     */
+    @Bean
+    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
+        return new OptimisticLockerInterceptor();
     }
 
 }

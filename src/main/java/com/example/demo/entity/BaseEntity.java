@@ -12,13 +12,12 @@ import javax.persistence.*;
 import javax.persistence.Version;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 /**
  * Base Entity
  * 声明各实体类的公共属性
  *
- * @author 胡荆陵
- * @version 1.0
- * @since 2019-04-12
+ * @author 马成军
  */
 @Data
 @MappedSuperclass

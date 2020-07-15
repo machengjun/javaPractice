@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class PersonCreateDto {
 
-    @NotBlank(message="不为空")
+    @NotBlank(message = "不为空")
     private String name;
 
     @NotNull

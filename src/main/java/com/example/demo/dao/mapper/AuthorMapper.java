@@ -18,6 +18,7 @@ public interface AuthorMapper extends BaseMapper<Author> {
     /**
      * 测试注解方式写负责查询
      * 对比发现还是用xml方式可读性更高，出错率低
+     *
      * @param ages
      * @return
      */

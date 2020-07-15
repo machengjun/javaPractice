@@ -11,14 +11,14 @@ import javax.validation.constraints.NotNull;
 @Data
 public class ArticleCreateReq {
     @NotNull
-    @NotBlank(message="标题不为空")
+    @NotBlank(message = "标题不为空")
     private String title;
 
-    @NotBlank(message="内容不为空")
+    @NotBlank(message = "内容不为空")
     private String content;
 
     @NotNull
-    @NotBlank(message="作者")
+    @NotBlank(message = "作者")
     private String authorId;
 
 }

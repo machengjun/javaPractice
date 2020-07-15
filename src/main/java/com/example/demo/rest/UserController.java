@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    ResponseEntity<String> updata(@PathVariable("id") String id ,@RequestBody UserCreateDto dto, BindingResult result) {
+    ResponseEntity<String> updata(@PathVariable("id") String id, @RequestBody UserCreateDto dto, BindingResult result) {
         log.debug(result.hasErrors() + "");
         log.debug("新增user 入参：" + JSON.toJSONString(dto));
         if (result.hasErrors()) {
