@@ -13,10 +13,7 @@ import java.util.List;
  * @author 马成军
  **/
 
-@Mapper
-@Repository
 public interface AuthorMapper extends BaseMapper<Author> {
-
 
     /**
      * 测试注解方式写负责查询

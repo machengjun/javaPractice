@@ -17,7 +17,7 @@ import javax.persistence.*;
 @TableName(value = "article")
 @ToString(callSuper = true, exclude = {"author"})
 @EqualsAndHashCode(callSuper = false)
-public class Article extends BaseEntity {
+public class  Article extends BaseEntity {
     /**
      * 关联作者
      */

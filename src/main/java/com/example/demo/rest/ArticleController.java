@@ -35,6 +35,7 @@ public class ArticleController {
         Article article = new Article();
         article.setTitle(dto.getTitle());
         article.setContent(dto.getContent());
+        article.setAuthorId(dto.getAuthorId());
         articleMapper.insert(article);
         return new ResponseEntity("添加成功", HttpStatus.OK);
     }
