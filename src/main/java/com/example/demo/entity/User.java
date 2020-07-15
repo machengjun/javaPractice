@@ -24,7 +24,7 @@ public class User extends BaseEntity {
     private String name;
 
 
-    @Column(name = "ArticleMapperage")
+    @Column(name = "age")
     @TableField(value = "age")
     private Integer age;
 

@@ -31,6 +31,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    UserMapper userMapper;
+
 
     @PostMapping("service")
     ResponseEntity<String> add(@RequestBody UserCreateDto dto, BindingResult result) {
@@ -46,7 +49,18 @@ public class UserController {
         return new ResponseEntity(res, HttpStatus.OK);
     }
 
-
-
-
+    @PutMapping("{id}")
+    ResponseEntity<String> updata(@PathVariable("id") String id ,@RequestBody UserCreateDto dto, BindingResult result) {
+        log.debug(result.hasErrors() + "");
+        log.debug("新增user 入参：" + JSON.toJSONString(dto));
+        if (result.hasErrors()) {
+            return new ResponseEntity(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
+        User user = new User();
+        //属性拷贝
+        user.setId(id);
+        BeanUtils.copyProperties(dto, user);
+        int res = userMapper.updateById(user);
+        return new ResponseEntity(res, HttpStatus.OK);
+    }
 }
