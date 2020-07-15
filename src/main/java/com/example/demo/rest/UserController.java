@@ -63,4 +63,28 @@ public class UserController {
         int res = userMapper.updateById(user);
         return new ResponseEntity(res, HttpStatus.OK);
     }
+
+    /**
+     * 测试乐观锁
+     *
+     * @return
+     */
+    @GetMapping("lock")
+    ResponseEntity<String> lock() {
+        String id = "c4e1b8601b3f907dc799d0fb1609516c";
+        User user = userService.getById(id);
+        user.setName("sfsdfs");
+//        int version = 2;
+//        User u = new User();
+//        u.setId(id);
+////        u.setVersion(version);
+//        u.setName("mcss");
+        if (userService.updateById(user)) {
+            System.out.println("Update successfully");
+        } else {
+            System.out.println("Update failed due to modified by others");
+        }
+        return new ResponseEntity("ok", HttpStatus.OK);
+    }
+
 }

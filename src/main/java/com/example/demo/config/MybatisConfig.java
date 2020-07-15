@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
@@ -32,16 +31,6 @@ public class MybatisConfig {
     @Profile({"dev", "test", "dev-cloud"})
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
-    }
-
-    /**
-     * 乐观锁
-     *
-     * @return
-     */
-    @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-        return new OptimisticLockerInterceptor();
     }
 
 }

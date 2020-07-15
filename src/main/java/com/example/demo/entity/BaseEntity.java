@@ -57,7 +57,7 @@ public abstract class BaseEntity implements Serializable {
      * 版本锁
      */
     @Version
-    @JsonIgnore
+//    @JsonIgnore
     @TableField(fill = FieldFill.INSERT)
     private Integer version;
 
