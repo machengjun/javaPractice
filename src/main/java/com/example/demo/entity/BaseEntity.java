@@ -57,6 +57,7 @@ public abstract class BaseEntity implements Serializable {
      * 版本锁
      */
     @Version
+    @com.baomidou.mybatisplus.annotation.Version
 //    @JsonIgnore
     @TableField(fill = FieldFill.INSERT)
     private Integer version;
