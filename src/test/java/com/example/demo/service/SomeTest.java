@@ -1,13 +1,14 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.mapper.UserMapper;
-import com.example.demo.entity.User;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 @SpringBootTest
+@Slf4j
 public class SomeTest {
     @Autowired
     UserService userMapper;
@@ -19,6 +20,6 @@ public class SomeTest {
 
     @Test
     public void lock(){
-
+        log.info("test lock coming");
     }
 }
