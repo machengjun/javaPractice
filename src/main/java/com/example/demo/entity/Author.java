@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.List;
 
 /**
  * @author 马成军
@@ -30,5 +31,6 @@ public class Author extends BaseEntity {
     @TableField(value = "age")
     private Integer age;
 
-
+    @TableField(exist = false)
+    private List<Article> articles;
 }

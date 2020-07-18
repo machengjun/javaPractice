@@ -3,6 +3,7 @@ package com.example.demo.rest;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.dao.jpa.AuthorDao;
 import com.example.demo.dao.mapper.AuthorMapper;
@@ -90,6 +91,7 @@ public class UserController {
     @GetMapping("page")
     ResponseEntity<String> page(@PageableDefault Pageable pageable) {
         Page<User> page = new Page<>(pageable.getPageNumber(), pageable.getPageSize());
+        page.addOrder(OrderItem.asc("version"));
         List<String> ages = Arrays.asList("22","1");
         IPage<User> data= userMapper.getAgeIn(page,ages);
         return new ResponseEntity(data, HttpStatus.OK);

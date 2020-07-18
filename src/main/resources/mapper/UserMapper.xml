@@ -12,5 +12,6 @@
                 #{it}
             </foreach>
         </where>
+        order by age desc
     </select>
 </mapper>
