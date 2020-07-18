@@ -9,6 +9,7 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.List;
 
 /**
@@ -31,6 +32,12 @@ public class Author extends BaseEntity {
     @TableField(value = "age")
     private Integer age;
 
+    @Transient
     @TableField(exist = false)
     private List<Article> articles;
+
+
+    @Transient
+    @TableField(exist = false)
+    private List<Address> addresses;
 }

@@ -1,10 +1,10 @@
 package com.example.demo.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.entity.Author;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,4 +31,34 @@ public interface AuthorMapper extends BaseMapper<Author> {
             + "</foreach>"
             + "</script>")
     List<Author> complexSearch(@Param("ages") List<Integer> ages);
+
+    /**
+     * 指定id获取作者
+     *
+     * @return
+     */
+
+    Author getAuthorWithArticle(@Param("id") String id);
+
+    Page<Author> listAuthorWithArticle(Page page);
+
+    /**
+     * 注解方式 关联
+     * @param page
+     * @return
+     */
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "id", property = "articles", many = @Many(select = "com.example.demo.dao.mapper.ArticleMapper.se"))
+    })
+    @Select("SELECT * FROM author ")
+    Page<Author> listAuthorWithArticle2(Page page);
+
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "id", property = "addresses", many = @Many(select = "com.example.demo.dao.mapper.AddressMapper.findByAuthorId"))
+    })
+    @Select("select * from author where id = #{id}")
+    List<Author> selectByIdWithAddr(@Param("id") String id);
+
 }

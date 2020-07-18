@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.mapper.AuthorMapper">
+    <resultMap type="com.example.demo.entity.Author" id="authorWithArticle">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <collection property="articles" ofType="com.example.demo.entity.Article">
+            <id property="id" column="user_id"/>
+            <result property="title" column="title"/>
+            <result property="content" column="content"/>
+        </collection>
+    </resultMap>
+    <select id="getAuthorWithArticle" resultMap="authorWithArticle">
+        select article.title,article.content,author.*
+        from author
+        left  join  article on article.author_id = author.id
+        where author.id=#{id}
+     </select>
+
+    <resultMap type="com.example.demo.entity.Author" id="authorWithArticlePage">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <collection property="articles" column="id" select="com.example.demo.dao.mapper.ArticleMapper.findByAuthorId"/>
+    </resultMap>
+
+    <select id="listAuthorWithArticle" resultMap="authorWithArticlePage">
+        select * from author
+     </select>
+
+</mapper>
