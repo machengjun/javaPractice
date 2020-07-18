@@ -1,6 +1,9 @@
 package com.example.demo.rest;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.dao.jpa.AuthorDao;
 import com.example.demo.dao.mapper.AuthorMapper;
 import com.example.demo.dao.mapper.UserMapper;
@@ -12,11 +15,14 @@ import com.example.demo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -74,11 +80,19 @@ public class UserController {
         User user = userService.getById(id);
         user.setName("new name");
         if (userService.updateById(user)) {
-           log.debug("Update successfully");
+            log.debug("Update successfully");
         } else {
             log.debug("Update failed due to modified by others");
         }
         return new ResponseEntity("ok", HttpStatus.OK);
+    }
+
+    @GetMapping("page")
+    ResponseEntity<String> page(@PageableDefault Pageable pageable) {
+        Page<User> page = new Page<>(pageable.getPageNumber(), pageable.getPageSize());
+        List<String> ages = Arrays.asList("22","1");
+        IPage<User> data= userMapper.getAgeIn(page,ages);
+        return new ResponseEntity(data, HttpStatus.OK);
     }
 
 }

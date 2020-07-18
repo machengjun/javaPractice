@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.dao.mapper.UserMapper;
 import com.example.demo.entity.User;
 import org.junit.jupiter.api.Assertions;
@@ -9,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.management.openmbean.CompositeDataSupport;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +66,46 @@ class UserServiceTest {
         List<String> ages = Arrays.asList("22","1");
         List<User> userList = userMapper.getAgeIn(ages);
         Assertions.assertNotNull(userList);
+    }
+
+    @Test
+    public void updataService(){
+        UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
+        userUpdateWrapper.lambda()
+                .set(User::getName,"hahha")
+                .setSql("age = age + 1")
+                .eq(User::getAge,22);
+        boolean res = userService.update(userUpdateWrapper);
+        Assertions.assertTrue(res);
+    }
+
+    @Test
+    public void updataMapper(){
+        UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
+        userUpdateWrapper.lambda()
+                .eq(User::getAge,22);
+        User user = new User();
+        user.setAge(11);
+        int res = userMapper.update(user,userUpdateWrapper);
+        Assertions.assertNotNull(res);
+    }
+
+    @Test
+    public void page(){
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.lambda().isNotNull(User::getAge);
+        Page<User> page = new Page<>(1, 1);
+        IPage<User> data = userMapper.selectPage(page,userQueryWrapper);
+        Assertions.assertNotNull(data);
+    }
+
+    @Test
+    public void myPage(){
+        Page page = new Page(1, 5);
+        page.setTotal(100);
+        long pageTotal = page.getPages();
+        Assertions.assertNotNull(pageTotal);
+
     }
 
 

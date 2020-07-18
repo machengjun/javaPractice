@@ -7,11 +7,10 @@
     <select id="getAgeIn" resultType="com.example.demo.entity.User">
         select * from user
         <where>
-           age in
+            age in
             <foreach collection="ages" item="it" index="index" open="(" close=")" separator=",">
                 #{it}
             </foreach>
         </where>
-
-     </select>
+    </select>
 </mapper>
