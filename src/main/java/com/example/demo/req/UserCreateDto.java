@@ -1,5 +1,6 @@
 package com.example.demo.req;
 
+import com.example.demo.enumeration.WorkType;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -18,4 +19,7 @@ public class UserCreateDto {
 
     @NotBlank(message = "不为空")
     private Integer age;
+
+    @NotBlank(message = "不为空")
+    private WorkType workType;
 }
