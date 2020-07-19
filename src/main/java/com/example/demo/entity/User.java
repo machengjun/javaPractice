@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,5 +25,10 @@ public class User extends BaseEntity {
     @Column(name = "age")
     @TableField(value = "age")
     private Integer age;
+
+    @TableLogic
+    @Column(name = "is_delete", columnDefinition = "tinyint")
+    @TableField(value = "is_delete",fill = FieldFill.INSERT)
+    private Integer isDelete;
 
 }
