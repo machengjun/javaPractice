@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
@@ -19,8 +20,37 @@ class UserMapperTest {
 
     @Test
     public void delete() {
-//        userService.removeById("9c833e2eeefc8959636050abeb5401e1");
-        int res = userMapper.deleteById("7185081842e97254d0cc4bee5ae48cbd");
+        int res = userMapper.deleteById("0c4682d95827deb80c8e2f556de3191f");
+        Assertions.assertNotNull(res);
+    }
+
+    /**
+     * sql 注入器test
+     */
+    @Test
+    public void deleteByIdWithFill() {
+        User user = new User();
+        user.setId("0c4682d95827deb80c8e2f556de3191f");
+        user.setDeleteTime(LocalDateTime.now());
+        int res = userMapper.deleteByIdWithFill(user);
+        Assertions.assertNotNull(res);
+    }
+
+    /**
+     * sql 注入器test
+     */
+    @Test
+    public void update() {
+        int res = userMapper.updateMcj("0c4682d95827deb80c8e2f556de3191f");
+        Assertions.assertNotNull(res);
+    }
+
+    /**
+     * 自定义mapper层 方法测试
+     */
+    @Test
+    public void findOne() {
+        User res = userMapper.findOne("0c4682d95827deb80c8e2f556de3191f");
         Assertions.assertNotNull(res);
     }
 

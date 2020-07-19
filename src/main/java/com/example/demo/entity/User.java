@@ -1,13 +1,15 @@
 package com.example.demo.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.demo.enumeration.WorkType;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * @author 马成军
@@ -18,8 +20,9 @@ import javax.persistence.*;
 @TableName(value = "user")
 public class User extends BaseEntity {
 
+
     @Column(name = "name")
-    @TableField(value = "name")
+    @TableField(value = "name",fill = FieldFill.UPDATE)
     private String name;
 
 
@@ -32,9 +35,23 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private WorkType workType;
 
+
+
+//    @Transient
+//    @Column(name = "other_info")
+//    @TableField(value = "other_info",typeHandler= FastjsonTypeHandler.class)
+//    private OtherInfo otherInfo;
+
     @TableLogic
     @Column(name = "is_delete", columnDefinition = "tinyint")
-    @TableField(value = "is_delete",fill = FieldFill.INSERT)
+    @TableField(value = "is_delete", fill = FieldFill.INSERT)
     private Integer isDelete;
+
+    /**
+     * 创建时间
+     */
+    @Column(name = "delete_time")
+    @TableField(fill = FieldFill.UPDATE)
+    private LocalDateTime deleteTime;
 
 }
