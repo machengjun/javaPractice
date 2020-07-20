@@ -65,10 +65,16 @@ class UserMapperTest {
     @Test
     public void findOneColume(){
         QueryWrapper<User> queryWrapper  = new QueryWrapper<>();
-        queryWrapper.lambda().select(User::getName).eq(BaseEntity::getId,"0c4682d95827deb80c8e2f556de3191f");
+        queryWrapper.lambda().select(User::getName).eq(BaseEntity::getId,"76dbf1ae45e1ded7a63bf52b960a5e28");
         List<Object> res = userMapper.selectObjs(queryWrapper);
         Assertions.assertNotNull(res);
-
     }
 
+    @Test
+    public void findOneColume2(){
+        QueryWrapper queryWrapper  = new QueryWrapper<>();
+        queryWrapper.select("name").eq("id","76dbf1ae45e1ded7a63bf52b960a5e28");
+        List<String> res = userMapper.selectObjs(queryWrapper);
+        Assertions.assertNotNull(res);
+    }
 }
