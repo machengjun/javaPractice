@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mybatis.dao.mapper.ArticleMapper">
+    <resultMap type="com.example.mybatis.entity.Article" id="articleWithAuthor">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="authorId" column="author_id"/>
+        <association property="author">
+            <id property="id" column="author_id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+        </association>
+    </resultMap>
+    <select id="getArticleWithAuthor" resultMap="articleWithAuthor">
+        select article.*,author.name,author.age from article  left  join  author on author.id = article.author_id limit 1
+     </select>
+
+    <select id="listArticleWithAuthor" resultMap="articleWithAuthor">
+        select article.*,author.name,author.age from article  left  join  author on author.id = article.author_id
+     </select>
+</mapper>
