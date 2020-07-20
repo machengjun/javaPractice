@@ -2,6 +2,7 @@ package com.example.mybatis.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mybatis.dao.mapper.UserMapper;
+import com.example.mybatis.entity.BaseEntity;
 import com.example.mybatis.entity.User;
 import com.example.mybatis.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -59,6 +60,15 @@ class UserMapperTest {
     public void find() {
         List<User> userList = userService.list(new QueryWrapper<>());
         Assertions.assertNotNull(userList);
+    }
+
+    @Test
+    public void findOneColume(){
+        QueryWrapper<User> queryWrapper  = new QueryWrapper<>();
+        queryWrapper.lambda().select(User::getName).eq(BaseEntity::getId,"0c4682d95827deb80c8e2f556de3191f");
+        List<Object> res = userMapper.selectObjs(queryWrapper);
+        Assertions.assertNotNull(res);
+
     }
 
 }
