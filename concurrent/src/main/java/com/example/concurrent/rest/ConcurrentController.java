@@ -44,11 +44,13 @@ public class ConcurrentController {
         zhiBo5.setStop(false);
         //获取返回值
         try {
-            int count1 = result1.get();
-            int count2 = result2.get();//堵塞操作，CompletableFuture 可以优化
-            int count3 = result3.get();
-            int count4 = result4.get();
-            int count5 = result5.get();
+            int count1 = result1.get(100,TimeUnit.SECONDS);
+
+
+            int count2 = result2.get(100,TimeUnit.SECONDS);//堵塞操作，CompletableFuture 可以优化
+            int count3 = result3.get(100,TimeUnit.SECONDS);
+            int count4 = result4.get(100,TimeUnit.SECONDS);
+            int count5 = result5.get(100,TimeUnit.SECONDS);
             //输出
             System.out.println(zhiBo1.getNameString() + "直播间有" + count1 + "人");
             System.out.println(zhiBo2.getNameString() + "直播间有" + count2 + "人");

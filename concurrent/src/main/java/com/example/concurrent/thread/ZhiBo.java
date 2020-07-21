@@ -34,10 +34,10 @@ class ZhiBo implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {//实现call方法
         //模拟异常
-        if ("王者荣耀".equals(this.getNameString())) {
-            List<String> data = new ArrayList<>();
-            data.get(1);
-        }
+//        if ("王者荣耀".equals(this.getNameString())) {
+//            List<String> data = new ArrayList<>();
+//            data.get(1);
+//        }
         while (stop) {
             Thread.sleep(speed);
             peoplenum++;
