@@ -45,9 +45,7 @@ public class ConcurrentController {
         //获取返回值
         try {
             int count1 = result1.get(100,TimeUnit.SECONDS);
-
-
-            int count2 = result2.get(100,TimeUnit.SECONDS);//堵塞操作，CompletableFuture 可以优化
+            int count2 = result2.get(100,TimeUnit.SECONDS); //堵塞操作，CompletableFuture 可以优化
             int count3 = result3.get(100,TimeUnit.SECONDS);
             int count4 = result4.get(100,TimeUnit.SECONDS);
             int count5 = result5.get(100,TimeUnit.SECONDS);
