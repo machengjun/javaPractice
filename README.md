@@ -1,6 +1,7 @@
 # javaPractice
 
-本工程为 学习java过程中的一些知识点实践，项目结构如下：
+本工程为 学习java过程中的一些知识点实践和工作过程中的所用技能的延伸。巩固知识，方便开发时copy代码
+项目结构如下：
 
-- mybatis: mybatis相关功能实践
+- mybatis: mybatis 和 mybatis-plus 相关功能实践
 - concurrent: 并发相关功能实践（多线程）
