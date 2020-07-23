@@ -67,7 +67,7 @@ public class BizConfig {
         dataSource.setLenientFallback(true);
         dataSource.setTargetDataSources(targetDataSources);
         dataSource.afterPropertiesSet();
-        dataSource.setMode("saasMode");
+        dataSource.setMode("singleMode");
         return dataSource;
     }
 
