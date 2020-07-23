@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       default-lazy-init="true">
+
+    <!--扫描路径-->
+    <context:component-scan base-package="com.example.saas"/>
+
+    <!--基于注解配置-->
+    <aop:aspectj-autoproxy/>
+
+    <bean id="dynamicDsAdvice" class="com.example.saas.aop.DynamicDsAdvice"/>
+    <!--<bean id="afterRegisterAdvice" class="cn.com.larunda.saas.aop.AfterRegisterAdvice"/>-->
+
+    <aop:config>
+        <!--        <aop:pointcut expression="@within(cn.com.larunda.saas.annotation.TenantDS)" id="pt"/>-->
+        <!--        <aop:pointcut expression="execution(public * cn.com.larunda.dao.jpa.TenantUserDao.*(..))" id="pt"/>-->
+        <!--        <aop:pointcut expression="execution(public * org.springframework.data.jpa.repository.JpaRepository+.*(..))" id="dao"/>-->
+        <!--        <aop:pointcut expression="execution(public * cn.com.larunda.dao.jpa.TenantUserDao.*(..))" id="dao"/>-->
+        <aop:pointcut id="saas1" expression="execution(* com.example.saas.spec.Saasable+.*(..))"/>
+        <!--<aop:pointcut id="register"
+                      expression="execution(public * cn.com.larunda.service.TenantUserService+.register(..)))"/>-->
+
+        <aop:aspect id="dynamicDsAspect" ref="dynamicDsAdvice">
+            <aop:around method="dynamicDs" pointcut-ref="saas1"/>
+        </aop:aspect>
+        <!--<aop:aspect id="afterRegisterAspect" ref="afterRegisterAdvice">
+            <aop:after-returning method="bindingDs" pointcut-ref="register" returning="ret"/>
+        </aop:aspect>-->
+    </aop:config>
+
+</beans>

@@ -18,6 +18,7 @@
     <modules>
         <module>mybatis</module>
         <module>concurrent</module>
+        <module>saas</module>
     </modules>
 
     <properties>
