@@ -16,6 +16,9 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * CompletableFuture使用方法的测试，伪需求代码编写
+ */
 @Slf4j
 @SpringBootTest
 public class CompletableFutureTest {
