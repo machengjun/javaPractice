@@ -9,8 +9,10 @@ import com.example.saas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
@@ -18,8 +20,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @TenantDS
     @Override
     public User getMyFriend() {
-        User user = userMapper.selectOne(new QueryWrapper<>());
-        return user;
+        List<User> users = userMapper.selectList(new QueryWrapper<>());
+        if(users.isEmpty()){
+            return null;
+        }
+        return users.get(0);
     }
 
     @TenantDS

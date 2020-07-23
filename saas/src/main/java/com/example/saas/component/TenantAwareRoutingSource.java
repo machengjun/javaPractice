@@ -32,7 +32,7 @@ public class TenantAwareRoutingSource extends AbstractRoutingDataSource {
         } else if (this.mode.equals("saasMode")) {
             String scheme = DsSchemaHolder.getSchema();
             if (StringUtils.isBlank(scheme)) {
-                throw new SaasFailedException("No SAAS Scheme found in current thread.");
+                return "masterDs";
             } else {
                 return scheme;
             }

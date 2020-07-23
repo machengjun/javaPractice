@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping
     ResponseEntity<String> get() {
         User user = userService.getMyFriend();
-        return new ResponseEntity("ok", HttpStatus.OK);
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 
 
