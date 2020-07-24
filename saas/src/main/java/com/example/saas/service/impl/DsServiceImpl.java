@@ -48,9 +48,9 @@ public class DsServiceImpl implements DsService {
     public JsonResult refreshDsInfo() {
         log.info("init SAAS mode...");
         Assert.isTrue(this.routingDs instanceof TenantAwareRoutingSource, "TenantAwareRoutingSource not found");
-        DataSource masterDs = (DataSource)this.dsComposer.getMap().get("masterDs");
+        DataSource masterDs = (DataSource) this.dsComposer.getMap().get("masterDs");
         Assert.notNull(masterDs, "masterDs not null");
-        TenantAwareRoutingSource routingSource = (TenantAwareRoutingSource)this.routingDs;
+        TenantAwareRoutingSource routingSource = (TenantAwareRoutingSource) this.routingDs;
         routingSource.setMode("saasMode");
         Map<Object, Object> dsMap = new HashMap(16);
 
@@ -76,7 +76,7 @@ public class DsServiceImpl implements DsService {
     }
 
     /**
-     * 此处根据实际架构，替换数据 saas配置 来源
+     * todo 此处根据实际架构，替换数据 saas配置 来源
      *
      * @return
      */

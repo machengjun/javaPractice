@@ -1,10 +1,12 @@
 package com.example.saas.component;
 
+import com.alibaba.ttl.TransmittableThreadLocal;
+
 /**
  * @author 马成军
  **/
 public final class DsSchemaHolder {
-    private static final ThreadLocal<String> SCHEMA_HOLDER = new ThreadLocal();
+    private static final TransmittableThreadLocal<String> SCHEMA_HOLDER = new TransmittableThreadLocal();
 
     private DsSchemaHolder() {
     }

@@ -15,11 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.util.Assert;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 
 @Aspect
 public class DynamicDsAdvice {
@@ -56,29 +51,20 @@ public class DynamicDsAdvice {
     }
 
     Object dynamicDs(ProceedingJoinPoint pjp) throws Throwable {
-        DsSchemaHolder.clear();
-        Assert.isNull(DsSchemaHolder.getSchema(), "DsSchemaHolder 中schema必须为空!");
-        if (DsSchemaHolder.isEmpty()) {
-            DsCheckResult result = DsUtil.checkDsByMethod(pjp);
-            log.debug("DsCheckResult:" + result);
-            if (result.isTenant()) {
-                log.debug("Set Tenant Datasource for:" + result.getClassName() + ":" + result.getMethodName());
-                HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-                Enumeration<String> schemaEnum = request.getHeaders("schema");
-                Assert.notNull(schemaEnum, "TenantDS: schema must not be blank!");
-                String schema = (String)schemaEnum.nextElement();
-                log.debug("schema:" + schema);
-                Assert.isTrue(!schema.equals("masterDs"), "tenant schema not equals MASTER_DS");
-                DsSchemaHolder.setSchema(schema);
-            } else if (result.isPlatform()) {
-                log.debug("Set Platform Datasource for: " + result.getClassName() + ":" + result.getMethodName());
-                DsSchemaHolder.setSchema("masterDs");
-            }
+        DsCheckResult result = DsUtil.checkDsByMethod(pjp);
+        log.debug("DsCheckResult:" + result);
+        if (result.isTenant()) {
+            log.debug("Set Tenant Datasource for:" + result.getClassName() + ":" + result.getMethodName());
+            Assert.isTrue(!"masterDs".equals(DsSchemaHolder.getSchema()), "tenant schema not equals MASTER_DS");
+        } else if (result.isPlatform()) {
+            log.debug("Set Platform Datasource for: " + result.getClassName() + ":" + result.getMethodName());
+            DsSchemaHolder.setSchema("masterDs");
+        } else {
+            //默认连接主数据源
+            log.debug("Set default Datasource for: " + result.getClassName() + ":" + result.getMethodName());
+            DsSchemaHolder.setSchema("masterDs");
         }
-
-        Assert.notNull(DsSchemaHolder.getSchema(), "DsSchemaHolder 中schema不为空!");
         Object returnObj = pjp.proceed();
-        DsSchemaHolder.clear();
         return returnObj;
     }
 }
