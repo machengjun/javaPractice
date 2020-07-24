@@ -62,11 +62,6 @@ public class UserController {
     ResponseEntity<String> threadGetData() throws ExecutionException, InterruptedException {
         ExecutorService service = Executors.newFixedThreadPool(2);
         CompletableFuture<User> res1 = CompletableFuture.supplyAsync(() -> {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return userService.getMyFriend();
         }, service);
         CompletableFuture<User> res2 = CompletableFuture.supplyAsync(() -> {
