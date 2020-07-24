@@ -14,6 +14,7 @@ import java.util.concurrent.*;
 
 /**
  * 线程池参数策略试验
+ *
  * @author 马成军
  **/
 @SpringBootTest
@@ -61,6 +62,43 @@ public class ThreadPoolTest {
         }
 
         Thread.sleep(100000);
+    }
+
+    /**
+     * 多线程 核心线程数 任务完成速度测试
+     *
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    @Test
+    @Async(value = "ThreadPoolA")
+    public void setting() throws InterruptedException, ExecutionException {
+        threadPoolA.setCorePoolSize(4);
+        long starttime = System.currentTimeMillis();
+        List<CompletableFuture> completableFutureList = new ArrayList<>();
+        for (int i = 1; i <= 4; i++) {
+            String name = "mcj00" + i;
+            CompletableFuture<String> res = CompletableFuture.supplyAsync(() -> {
+                countThing(name);
+                return name;
+            }, threadPoolA);
+            completableFutureList.add(res);
+        }
+        CompletableFuture[] arr = completableFutureList.toArray(new CompletableFuture[completableFutureList.size()]);
+        BlockingQueue<Runnable> que = threadPoolA.getThreadPoolExecutor().getQueue();
+        log.info("que:{}", que);
+        CompletableFuture.allOf(arr).join();
+        long endtime = System.currentTimeMillis();
+        log.info("程序运行的时间为:{}毫秒", (endtime - starttime));
+
+    }
+
+    private static void countThing(String s) {
+        log.info("countThing start {}", s);
+        for (int i = 0; i < 10000; i++) {
+            System.out.println(s + " " + i);
+            log.info("{} {}", s, i);
+        }
     }
 
     private static void doSomeThing(String s) {

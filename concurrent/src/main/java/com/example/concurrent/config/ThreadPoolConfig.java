@@ -14,7 +14,7 @@ public class ThreadPoolConfig {
     public ThreadPoolTaskExecutor ThreadPoolTaskExecutormyTaskAsyncPoolA() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         //核心线程数
-        executor.setCorePoolSize(2);
+        executor.setCorePoolSize(4);
         //最大线程数
         executor.setMaxPoolSize(8);
         //任务队列
