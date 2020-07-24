@@ -86,13 +86,13 @@ public class DsServiceImpl implements DsService {
                         .setDriver("com.mysql.cj.jdbc.Driver")
                         .setUsername("sddt")
                         .setPassword("sddt8888")
-                        .setUrl("jdbc:mysql://localhost:3307/saas_one?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                        .setUrl("jdbc:mysql://localhost:3306/saas_one?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false")
                         .setSchema("saas_one"),
                 new DataSourceVo()
                         .setDriver("com.mysql.cj.jdbc.Driver")
                         .setUsername("sddt")
                         .setPassword("sddt8888")
-                        .setUrl("jdbc:mysql://localhost:3307/saas_one?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false")
+                        .setUrl("jdbc:mysql://localhost:3306/saas_one?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false")
                         .setSchema("saas_two")
         );
         return dataSourceVoList;

@@ -5,9 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
-@ComponentScan(basePackages = {"com.example.saas", "com.example.saas.config"})
 @SpringBootApplication
 @ImportResource("classpath:spring/saas-config.xml")
+@ComponentScan(basePackages = {"com.example.saas", "com.example.saas.config"})
+
 public class SaasApplication {
 
     public static void main(String[] args) {

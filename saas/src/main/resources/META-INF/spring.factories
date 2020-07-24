@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.com.larunda.config.BizConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.example.saas.config.BizConfig
