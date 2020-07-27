@@ -28,9 +28,11 @@ public class KafkaConsumerListener {
      * @param message
      */
     @KafkaListener(topics = {"${javaPractice.kafka.consumer.user-message.topic}"})
-    public void userMessage(String message) {
+    public void userMessage(String message) throws InterruptedException {
         //接受kafka数据
         LOGGER.info("开始消费队列{}" ,message);
+        Thread.sleep(5000);
+        LOGGER.info("结束消费队列{}" ,message);
         JSONObject jsonObject = JSON.parseObject(message);
         String messageSource = (String) jsonObject.get("message_source");
         JSONObject data = (JSONObject) jsonObject.get("data");

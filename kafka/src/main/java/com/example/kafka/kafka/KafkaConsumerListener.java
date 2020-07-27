@@ -12,6 +12,8 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Kafka Feed数据消费端
  *
@@ -31,36 +33,28 @@ public class KafkaConsumerListener {
      * @param message
      */
     @KafkaListener(topics = {"${javaPractice.kafka.consumer.user-message.topic}"})
-    public void userMessage(String message) {
+    public void userMessage(String message) throws InterruptedException {
         //接受kafka数据
-        LOGGER.info("开始消费队列{}" ,message);
+        LOGGER.info("开始消费队列{}", message);
+        Thread.sleep(5000);
+        LOGGER.info("结束消费队列{}", message);
         JSONObject jsonObject = JSON.parseObject(message);
         String messageSource = (String) jsonObject.get("message_source");
         JSONObject data = (JSONObject) jsonObject.get("data");
-        if(messageSource==null&&data==null){
+        if (messageSource == null && data == null) {
             LOGGER.info("队列入参不合法");
             return;
         }
 //        applicationContext.publishEvent(new UserMessageEvent(this, messageSource, data));
 
     }
-//    /**
-//     * 消费业务数据重新计算
-//     *
-//     * @param dataModify
-//     */
-//    @KafkaListener(topics = {"${javaPractice.kafka.consumer.data-modify.topic}"})
-//    public void dataModify(String dataModify) {
-//        //接受kafka数据
-//        LOGGER.info("开始消费队列" + dataModify);
-//        JSONObject jsonObject = JSON.parseObject(dataModify);
-//        String type = (String) jsonObject.get("type");
-//        JSONObject data = (JSONObject) jsonObject.get("data");
-//        if(type==null&&data==null){
-//            LOGGER.info("队列入参不合法");
-//            return;
-//        }
-////        applicationContext.publishEvent(new DataModifyEvent(this, type, data));
-//    }
+
+    /**
+     *批量消费
+     */
+    @KafkaListener(topics = "${javaPractice.kafka.consumer.data-modify.topic}", containerFactory = "batchFactory")
+    public void listen2(List<String> records) {
+        LOGGER.info("开始消费队列{}", records);
+    }
 
 }

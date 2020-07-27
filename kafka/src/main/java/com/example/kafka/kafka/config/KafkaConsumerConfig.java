@@ -31,6 +31,23 @@ public class KafkaConsumerConfig {
     private String servers;
     @Value("${javaPractice.kafka.consumer.group-id}")
     private String groupId;
+    @Value("${javaPractice.kafka.consumer.max-poll}")
+    private String maxPoll;
+
+    /**
+     *  消费者批量工程
+     */
+    @Bean
+    public KafkaListenerContainerFactory<?> batchFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        Map<String, Object> setting = consumerConfigs();
+        //设置为批量消费,Kafka配置参数中设置ConsumerConfig.MAX_POLL_RECORDS_CONFIG
+        setting.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG,maxPoll);
+        DefaultKafkaConsumerFactory<Object, Object> kafkaConsumer = new DefaultKafkaConsumerFactory<>(setting);
+        factory.setConsumerFactory(kafkaConsumer);
+        factory.setBatchListener(true);
+        return factory;
+    }
 
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
@@ -60,8 +77,6 @@ public class KafkaConsumerConfig {
      *
      * @return
      */
-
-
     @Bean
     public KafkaConsumerListener listener() {
         return new KafkaConsumerListener();
