@@ -35,6 +35,11 @@
           depends_on:
             - zoo1
           container_name: kafka
+          
+- ms1 ms2 : spring cloud nacos 相关
+   
+    nacos环境：
+    ``https://nacos.io/zh-cn/docs/quick-start-docker.html``        
 
 
 
