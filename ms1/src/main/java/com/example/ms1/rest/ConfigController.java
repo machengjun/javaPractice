@@ -1,6 +1,5 @@
 package com.example.ms1.rest;
 
-import com.alibaba.nacos.api.config.annotation.NacosValue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +16,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RefreshScope
 public class ConfigController {
 
-    @NacosValue(value = "${useLocalCache:false}", autoRefreshed = true)
+
+    @Value(value = "${useLocalCache}")
     private boolean useLocalCache;
+
+    @Value(value = "${mcj.name}")
+    private String name;
 
     @RequestMapping(value = "/get", method = GET)
     @ResponseBody
