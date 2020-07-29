@@ -4,6 +4,7 @@ import com.alibaba.nacos.api.annotation.NacosInjected;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
+import com.example.ms2.service.feign.DiscoverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -25,9 +26,18 @@ public class DiscoveryController {
     @Qualifier("nacosRes")
     private RestTemplate restTemplate;
 
+    @Autowired
+    DiscoverService discoverService;
+
     @RequestMapping(value = "/echo/{str}", method = RequestMethod.GET)
-    public String echo(@PathVariable String str) {
+    public String ribbonEcho(@PathVariable String str) {
         return restTemplate.getForObject("http://ms1/discovery/echo/" + str, String.class);
+    }
+
+
+    @GetMapping(value = "/feignEcho/{str}")
+    public String feignEcho(@PathVariable String str) {
+        return discoverService.getEcho("feignEcho");
     }
 }
 

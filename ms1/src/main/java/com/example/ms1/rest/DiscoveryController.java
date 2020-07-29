@@ -6,6 +6,7 @@ import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,6 +28,8 @@ public class DiscoveryController {
 
     @GetMapping(value = "/echo/{string}")
     public String echo(@PathVariable String string) {
+//        List<String> list = new ArrayList<>();
+//        list.get(1);
         return "Hello Nacos Discovery " + string;
     }
 

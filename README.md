@@ -9,7 +9,8 @@
 - kafka kafka1: kafka相关
 
     单节点环境 docker-compose.yml 文件
-    ``version: '2'
+    
+      version: '2'
       
       services:
         zoo1:
