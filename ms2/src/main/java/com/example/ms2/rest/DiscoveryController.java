@@ -36,7 +36,8 @@ public class DiscoveryController {
 
 
     @GetMapping(value = "/feignEcho/{str}")
-    public String feignEcho(@PathVariable String str) {
+    public String feignEcho(@PathVariable String str) throws InterruptedException {
+        Thread.sleep(2000);
         return discoverService.getEcho("feignEcho");
     }
 }

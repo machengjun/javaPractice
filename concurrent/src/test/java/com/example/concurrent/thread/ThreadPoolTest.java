@@ -3,9 +3,11 @@ package com.example.concurrent.thread;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,6 +24,9 @@ import java.util.concurrent.*;
 public class ThreadPoolTest {
     @Autowired
     private ThreadPoolTaskExecutor threadPoolA;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Test
     @Async(value = "ThreadPoolA")
@@ -134,6 +139,23 @@ public class ThreadPoolTest {
         }
     }
 
+    @Test
+    @Async(value = "ThreadPoolA")
+    public void rongDuan() throws InterruptedException, ExecutionException {
+        threadPoolA.setCorePoolSize(10);
+        long starttime = System.currentTimeMillis();
+        List<CompletableFuture> completableFutureList = new ArrayList<>();
+        for (int i = 1; i <= 1010; i++) {
+            String name = "mcj00" + i;
+            CompletableFuture<String> res = CompletableFuture.supplyAsync(() -> restTemplate.getForObject("http://127.0.0.1:21002/discovery/feignEcho/" + name, String.class), threadPoolA);
+            completableFutureList.add(res);
+        }
+        CompletableFuture[] arr = completableFutureList.toArray(new CompletableFuture[completableFutureList.size()]);
+        CompletableFuture.allOf(arr).join();
+        long endtime = System.currentTimeMillis();
+        log.info("程序运行的时间为:{}毫秒", (endtime - starttime));
+
+    }
 
     static class MyThread implements Runnable {
         String name;
