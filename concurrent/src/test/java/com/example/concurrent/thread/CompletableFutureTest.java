@@ -401,6 +401,27 @@ public class CompletableFutureTest {
         Thread.sleep(100000);
     }
 
+    @Test
+    public void allOfRun() {
+
+        List<String> data = new ArrayList<>();
+
+        List<CompletableFuture> completableFutureList = new ArrayList<>();
+        CompletableFuture completableFuture1 = CompletableFuture.runAsync(() -> {
+            doSomeThing("ss");
+            data.add("ss");
+        });
+        completableFutureList.add(completableFuture1);
+        CompletableFuture completableFuture2 = CompletableFuture.runAsync(() -> {
+            doSomeThing("bb");
+            data.add("bb");
+
+        });
+        completableFutureList.add(completableFuture2);
+        CompletableFuture[] arr = completableFutureList.toArray(new CompletableFuture[completableFutureList.size()]);
+        CompletableFuture.allOf(arr).join();
+        log.info("{}", data);
+    }
 
     @Test
     public void myCompletableFutureTow() throws ExecutionException, InterruptedException {
