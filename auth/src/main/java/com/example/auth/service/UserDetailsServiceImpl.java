@@ -17,6 +17,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Piconjo
+ * @date 2020/5/19  16:38
+ */
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -25,18 +30,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        if (s == null || "".equals(s)) {
+        if (s == null || "".equals(s))
+        {
             throw new RuntimeException("用户不能为空");
         }
         // 调用方法查询用户
         User user = userMapper.findUserByUsername(s);
-        if (user == null) {
+        if (user == null)
+        {
             throw new RuntimeException("用户不存在");
         }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : userMapper.findRoleByUsername(s)) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        for (Role role:userMapper.findRoleByUsername(s))
+        {
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getName()));
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), "{noop}" + user.getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),"{noop}"+user.getPassword(),authorities);
     }
 }
