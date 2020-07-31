@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
 
 /**
  * 多线程变量安全
@@ -17,35 +21,94 @@ import java.util.concurrent.ExecutionException;
 public class ShareValueTest {
 
     @Autowired
-    private ThreadPoolTaskExecutor threadPoolA;
     private static int count = 0;
 
+    @Autowired
+    CompletableFutureShare completableFutureShare;
+
     @Test
-    public void demo1() throws InterruptedException, ExecutionException {
+    public void demo1() {
+        List<CompletableFuture<String>> completableFutureList = new ArrayList<>();
+
         Integer num = 0;
 //        synchronized(num){
-            for (int i = 0; i < 10; i++) {
-                CompletableFuture.runAsync(() -> {
-                            runWithData(num);
-                        }
-                );
-            }
+        for (int i = 0; i < 10; i++) {
+            CompletableFuture completableFuture = completableFutureShare.count(num);
+            completableFutureList.add(completableFuture);
+        }
 //        }
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("result: " + count);
+        CompletableFuture[] arr = completableFutureList.toArray(new CompletableFuture[completableFutureList.size()]);
+        CompletableFuture.allOf(arr).join();
+        log.info("result: {}", num);
 
     }
 
-    private void runWithData(Integer num) {
-        for (int j = 0; j < 1000000; j++) {
-            log.info("{},{}",j,num);
-            count++;
+    @Test
+    public void demo3() {
+        List<CompletableFuture<String>> completableFutureList = new ArrayList<>();
+
+        List<String> data = new ArrayList<>();
+//        synchronized(num){
+        for (int i = 0; i < 10; i++) {
+            CompletableFuture completableFuture = completableFutureShare.add(data);
+            completableFutureList.add(completableFuture);
         }
+//        }
+        CompletableFuture[] arr = completableFutureList.toArray(new CompletableFuture[completableFutureList.size()]);
+        CompletableFuture.allOf(arr).join();
+        log.info("result: {}", data);
+
     }
+
+    /**
+     * 锁任意对象demo
+     */
+    @Test
+    public void demo4() {
+        HashMap<String, Integer> num = new HashMap<>();
+        num.put("key", 0);
+
+        List<CompletableFuture<String>> completableFutureList = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            CompletableFuture completableFuture = CompletableFuture.runAsync(() -> {
+                synchronized (num) {
+                    for (int j = 0; j < 10000; j++) {
+                        Integer val = num.get("key") + 1;
+                        num.put("key", val);
+                    }
+                }
+            });
+            completableFutureList.add(completableFuture);
+        }
+
+        CompletableFuture[] arr = completableFutureList.toArray(new CompletableFuture[completableFutureList.size()]);
+        CompletableFuture.allOf(arr).join();
+        log.info("result: {}", num);
+
+    }
+
+    @Test
+    public void demo5() {
+        List<String> stringList = new ArrayList<>();
+        List<CompletableFuture<String>> completableFutureList = new ArrayList<>();
+
+        List<String> data = new ArrayList<>();
+//        synchronized(num){
+        for (int i = 0; i < 10; i++) {
+            CompletableFuture completableFuture = CompletableFuture.runAsync(() -> {
+                stringList.add("ssddf");
+            });
+            completableFutureList.add(completableFuture);
+
+        }
+//        }
+        CompletableFuture[] arr = completableFutureList.toArray(new CompletableFuture[completableFutureList.size()]);
+        CompletableFuture.allOf(arr).join();
+        log.info("result: {}", data);
+
+    }
+
 
     @Test
     public void demo2() throws InterruptedException, ExecutionException {
