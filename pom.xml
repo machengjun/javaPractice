@@ -24,6 +24,7 @@
         <module>ms1</module>
         <module>ms2</module>
         <module>auth</module>
+        <module>auth2</module>
     </modules>
 
     <properties>
