@@ -13,7 +13,6 @@ import java.util.Set;
 
 /**
  * 用户认证、权限、使用security的表单登录时会被调用(自定义登录请忽略)
- * @author: jamesluozhiwei
  */
 @Component
 @Slf4j
