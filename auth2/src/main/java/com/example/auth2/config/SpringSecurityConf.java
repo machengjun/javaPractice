@@ -59,14 +59,14 @@ public class SpringSecurityConf extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //关闭session管理，使用token机制处理
                 .and().httpBasic().authenticationEntryPoint(authenticationEntryPoint)
 //                .and().antMatcher("/login")
-//                .and().authorizeRequests().anyRequest().access("@rbacauthorityservice.hasPermission(request,authentication)")// 自定义权限校验  RBAC 动态 url 认证
-                .and().authorizeRequests().antMatchers(HttpMethod.GET,"/test").hasAuthority("test:list")
-                .and().authorizeRequests().antMatchers(HttpMethod.POST,"/test").hasAuthority("test:add")
-                .and().authorizeRequests().antMatchers(HttpMethod.PUT,"/test").hasAuthority("test:update")
-                .and().authorizeRequests().antMatchers(HttpMethod.DELETE,"/test").hasAuthority("test:delete")
-                .and().authorizeRequests().antMatchers("/test/*").hasAuthority("test:manager")
+                .and().authorizeRequests().anyRequest().access("@rbacauthorityservice.hasPermission(request,authentication)")// 自定义权限校验  RBAC 动态 url 认证
+//                .and().authorizeRequests().antMatchers(HttpMethod.GET,"/test").hasAuthority("test:list")
+//                .and().authorizeRequests().antMatchers(HttpMethod.POST,"/test").hasAuthority("test:add")
+//                .and().authorizeRequests().antMatchers(HttpMethod.PUT,"/test").hasAuthority("test:update")
+//                .and().authorizeRequests().antMatchers(HttpMethod.DELETE,"/test").hasAuthority("test:delete")
+//                .and().authorizeRequests().antMatchers("/test/*").hasAuthority("test:manager")
 //                .and().authorizeRequests().antMatchers("/login").permitAll() //放行login(这里使用自定义登录)
-                .and().authorizeRequests().antMatchers("/hello").permitAll()
+//                .and().authorizeRequests().antMatchers("/hello").permitAll()
 
                 .and()
                 .formLogin()  //开启登录, 定义当需要用户登录时候，转到的登录页面
