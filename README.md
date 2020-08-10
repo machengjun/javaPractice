@@ -42,5 +42,5 @@
     nacos环境：
     ``https://nacos.io/zh-cn/docs/quick-start-docker.html``        
 
-
+- auth auth2 : spring security jwt不同应用场景的配置
 
