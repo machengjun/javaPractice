@@ -1,5 +1,6 @@
 package com.example.validate.req;
 
+import com.example.validate.annotation.MyConstraint;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ public class ArticleCreateReq {
     @NotBlank(message = "标题不为空")
     private String title;
 
+    @MyConstraint
     @NotBlank(message = "内容不为空")
     private String content;
 
