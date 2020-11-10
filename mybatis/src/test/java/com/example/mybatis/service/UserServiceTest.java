@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @SpringBootTest
 class UserServiceTest {
@@ -25,6 +26,29 @@ class UserServiceTest {
     @Test
     public void test1() {
         Assertions.assertNotNull(userService);
+    }
+
+    /**
+     * 线程池连接数测试
+     */
+    @Test
+    public void pool() {
+        CompletableFuture<String> res = CompletableFuture.supplyAsync(() -> {
+            List<User> users = userMapper.selectList(null);
+            return "ss";
+        });
+        CompletableFuture<String> res2 = CompletableFuture.supplyAsync(() -> {
+            List<User> users2 = userMapper.selectList(null);
+            return "ss";
+        });
+        CompletableFuture<String> res3 = CompletableFuture.supplyAsync(() -> {
+            List<User> users3 = userMapper.selectList(null);
+            return "ss";
+        });
+        CompletableFuture<String> res4 = CompletableFuture.supplyAsync(() -> {
+            List<User> users4 = userMapper.selectList(null);
+            return "ss";
+        });
     }
 
     /**
